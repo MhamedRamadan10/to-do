@@ -4,8 +4,8 @@ import { Text, Pressable, StyleSheet, View, SafeAreaView, StatusBar, ScrollView 
 export default function TDScreen({children, style}) {
 
   return (
-    <ScrollView style={{backgroundColor:'#fff'}}>
-        <StatusBar backgroundColor='#fff' barStyle='dark-content' />
+    <ScrollView style={{backgroundColor:'#fafafa', padding:10}}>
+        <StatusBar backgroundColor='#fafafa' barStyle='dark-content' />
         <SafeAreaView >
           <View style={[style]}>{children}</View>
         </SafeAreaView>
