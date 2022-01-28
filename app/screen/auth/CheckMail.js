@@ -1,13 +1,18 @@
 import { useEffect, useState, useContext } from 'react'
-import { View, Text } from 'react-native'
+import { Image } from 'react-native'
+import { TDScreen, TDText } from './../../components'
+import { LOGO } from './../../assets'
+import { Constants } from './../../constants'
+
 import { MaterialCommunityIcons as Icon} from "@expo/vector-icons"
 
 
 export default function CheckMail({ navigation }) {
 
   return (
-    <View>
-      <Text style={{fontSize:20, textAlign:'center', paddingVertical:10}}>CheckMail</Text>
-    </View>
+    <TDScreen>
+      <Image source={LOGO} style={{resizeMode:'contain', height:Constants.H*.3, width:Constants.W*.8, alignSelf:'center', marginVertical:Constants.H*.05}}/>
+      <TDText t='CheckMail'/>
+    </TDScreen>
   )
 }
