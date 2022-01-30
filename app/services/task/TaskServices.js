@@ -7,7 +7,7 @@ const API = Links.task;
 export default class TaskServices extends Component {
 
   static get(callBack) {
-    Adaptor.get(`${API.task}?limit=11&skip=0`).then(callBack)
+    Adaptor.get(`${API.task}`).then(callBack)
   }
 
   static add(data, callBack) {

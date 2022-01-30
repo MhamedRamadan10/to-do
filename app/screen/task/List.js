@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
+import { View } from 'react-native'
 import { TDScreen, TDText, TDInput, TDButton, Task } from './../../components'
 import { FloatingAction } from "react-native-floating-action"
 import { Constants } from './../../constants'
@@ -24,9 +25,7 @@ export default function List({ navigation }) {
 
   return (
     <>
-    <TDScreen loading={loading}>
-
-      <TDText t='My To-Dos' isCenter isBold style={{marginVertical:Constants.H*.015}}/>
+    <TDScreen loading={loading} title='My To-Dos' action={false}>
 
       {!loading &&(
         tasks.length == 0 ? <TDText t='No to do, add new one ✍🏻' isCenter
@@ -35,6 +34,10 @@ export default function List({ navigation }) {
           tasks.map((task,k)=> <Task key={k} task={task} update={()=>getTasks(false)} navigation={navigation}/>)
 
         )}
+
+        {/* <View style={{marginBottom:80}}>
+
+        </View> */}
 
     </TDScreen>
 
