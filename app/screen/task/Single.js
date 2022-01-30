@@ -13,11 +13,14 @@ export default function Single({ navigation }) {
   useEffect(()=> setTask(global.task.description) ,[])
 
   const edit = () => {
-    setLoading(true)
-    TaskServices.edit(global.task._id, {description:task} , res => {
-      setLoading(false)
-      res.success ? navigation.navigate('List') : Toast.show('Something is wrong')
-    })
+    if (!task.trim()) Toast.show('Please, Enter description')
+    else {
+      setLoading(true)
+      TaskServices.edit(global.task._id, {description:task} , res => {
+        setLoading(false)
+        res.success ? navigation.navigate('List') : Toast.show('Something is wrong')
+      })
+    }
   }
 
   return (

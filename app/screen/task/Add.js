@@ -12,11 +12,14 @@ export default function Add({ navigation }) {
 
 
   const add = () => {
-    setLoading(true)
-    TaskServices.add({description:task} , res => {
-      setLoading(false)
-      res.success ? navigation.navigate('List') : Toast.show('Something is wrong')
-    })
+    if (!task.trim()) Toast.show('Please, Enter description')
+    else {
+      setLoading(true)
+      TaskServices.add({description:task} , res => {
+        setLoading(false)
+        res.success ? navigation.navigate('List') : Toast.show('Something is wrong')
+      })
+    }
   }
 
   return (
