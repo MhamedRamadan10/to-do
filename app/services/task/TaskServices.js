@@ -6,8 +6,8 @@ const API = Links.task;
 
 export default class TaskServices extends Component {
 
-  static get(callBack) {
-    Adaptor.get(`${API.task}`).then(callBack)
+  static get(query, callBack) {
+    Adaptor.get(`${API.task}${query}`).then(callBack)
   }
 
   static add(data, callBack) {

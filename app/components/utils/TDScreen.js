@@ -1,9 +1,13 @@
 import React from 'react'
 import { ActivityIndicator, View, SafeAreaView, StatusBar, ScrollView } from 'react-native'
 import { Constants } from './../../constants'
+import { useScroll } from './../../hooks'
 import TDHeader from './TDHeader'
 
-export default function TDScreen({children, loading, title, action, style}) {
+
+export default function TDScreen({children, loading, title, action, getNextPage, style}) {
+
+  const { isCloseToBottom } = useScroll()
 
   return (
     <View>
@@ -11,7 +15,9 @@ export default function TDScreen({children, loading, title, action, style}) {
         <TDHeader title={title} action={action}/>
       )}
 
-      <ScrollView style={{backgroundColor:'#fafafa', padding:10, minHeight:Constants.H}}>
+      <ScrollView
+        onScroll={({nativeEvent}) => isCloseToBottom(nativeEvent) && getNextPage() }
+        style={{backgroundColor:'#fafafa', padding:10, minHeight:Constants.H}}>
         <StatusBar backgroundColor='#fafafa' barStyle='dark-content' />
 
         <SafeAreaView >

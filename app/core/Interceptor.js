@@ -7,7 +7,7 @@ axios.interceptors.request.use(async request => {
 
   request.headers.Accept = 'application/json';
   request.headers['Content-Type'] = 'application/json';
-  console.log(request);
+
   return request
 })
 
