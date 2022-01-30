@@ -4,6 +4,9 @@ import { Constants } from './../../constants'
 import { AuthServices } from './../../services'
 import { isValidEmail } from './../../core/Helpers'
 import Toast from 'react-native-simple-toast'
+import AppContext from './../../context/AppContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 export default function Register({ navigation }) {
 
@@ -13,14 +16,17 @@ export default function Register({ navigation }) {
   const [ password, setPassword ] = useState('')
   const [ loading, setLoading ] = useState(false)
 
+  const { setAccount } = useContext(AppContext)
+
   const signUp = () => {
     if (!isValid()) return
     setLoading(true)
-    AuthServices.register({ name, age, email, password }, res=> {
+    AuthServices.register({ name, age, email, password }, async res=> {
       setLoading(false)
       if (res == 'error') Toast.show('Something is wrong, please enter valid data')
       else {
-        // setUser hook
+        await AsyncStorage.setItem('@user-data', JSON.stringify(res))
+        setAccount(true)
       }
     })
   }
@@ -29,10 +35,13 @@ export default function Register({ navigation }) {
       Toast.show('Please, fill required inputs')
       return false
     }else if (!isValidEmail(email)) {
-      Toast.show('Please, valid email')
+      Toast.show('Please, enter valid email')
       return false
     }else if (password.length < 6) {
-      Toast.show('Please, valid password')
+      Toast.show('Please, enter valid password')
+      return false
+    }else if (age.length > 2) {
+      Toast.show('Please, enter valid age')
       return false
     }
     return true

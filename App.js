@@ -1,28 +1,25 @@
 import { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { AuthNav } from './app/navigation'
-import { LogBox } from 'react-native'
-import { useFonts } from 'expo-font'
+import { AuthNav, HomeNav } from './app/navigation'
+import { useInit } from './app/hooks'
+import AppContext  from './app/context/AppContext'
 import AppLoading from 'expo-app-loading'
-import './app/core/Interceptor'
 
 export default function App() {
 
+  const [ hasAccount, setAccount ] = useState(false)
   const [ isReady, setReady ] = useState(false)
+  const { init, fontsLoaded } = useInit(setAccount)
 
-  LogBox.ignoreAllLogs()
 
-  let [ fontsLoaded ] = useFonts({
-    'Tajawal-Medium': require('./app/assets/fonts/Tajawal-Medium.ttf'),
-    'Tajawal-Bold': require('./app/assets/fonts/Tajawal-Bold.ttf'),
-  });
-
-  if ( !fontsLoaded )
-  return  <AppLoading startAsync={fontsLoaded} onFinish={()=> setReady(true)} onError={console.warn}/>
+  if ( !isReady || !fontsLoaded )
+  return  <AppLoading startAsync={init} onFinish={()=> setReady(true)} onError={console.warn}/>
 
   return (
-    <NavigationContainer>
-      <AuthNav/>
-    </NavigationContainer>
+    <AppContext.Provider value={{hasAccount, setAccount}}>
+      <NavigationContainer>
+        { hasAccount ? <HomeNav/> : <AuthNav/> }
+      </NavigationContainer>
+    </AppContext.Provider>
   )
 }
