@@ -40,7 +40,6 @@ export default function List({ navigation }) {
           style={{fontSize:14, color:'#777', marginVertical:Constants.H*.25}}/>
           :
           tasks.map((task,k)=> <Task key={k} task={task} update={()=>getTasks(false)} navigation={navigation}/>)
-
         )}
 
         <View style={{height:80, justifyContent:'center'}}>

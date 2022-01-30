@@ -3,7 +3,8 @@ import { Pressable, StyleSheet, View, ActivityIndicator } from 'react-native'
 import { Constants } from './../../constants'
 import { TDText } from './../../components'
 import { TaskServices } from './../../services'
-import { MaterialCommunityIcons as Icon} from "@expo/vector-icons"
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons"
+import moment from 'moment'
 
 export default function Card({task, update, navigation}) {
 
@@ -41,7 +42,11 @@ export default function Card({task, update, navigation}) {
           <Icon name={task.completed?'checkbox-marked':'checkbox-blank-outline'} style={styles.icon}/>
           <TDText t={task.description} style={[styles.title,{textDecorationLine:task.completed? 'line-through':'none'}]} />
         </View>
-        <Icon name={isOpen?'chevron-up':'chevron-down'} style={styles.icon}/>
+        <View>
+          <TDText t={moment(task.createdAt).calendar()} style={{fontSize:10,color:'#999'}}/>
+          <Icon name={isOpen?'chevron-up':'chevron-down'} style={[styles.icon,{alignSelf:'flex-end'}]}/>
+        </View>
+
       </View>
       {isOpen &&(
         <View style={styles.actions}>
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
   card:{ backgroundColor:'#fff', padding:15, borderRadius:12, width:'95%',alignSelf:'center', marginTop:Constants.H*.02},
   wrapper:{ flexDirection:'row', justifyContent:'space-between',},
   actions:{ flexDirection:'row', justifyContent:'space-around',marginTop:10, paddingHorizontal:10},
-  title:{flexDirection:'row',maxWidth:'85%', marginHorizontal:10},
+  title:{flexDirection:'row',maxWidth:'75%', marginHorizontal:10, alignSelf:'center'},
   icon:{alignSelf:'center', fontSize:25, color:'#777'},
   action:{borderRadius:12, minWidth:'25%', flexDirection:'row', justifyContent:'center', padding:8},
   iconAction:{color:'#fff',fontSize:20},
