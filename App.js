@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { AuthNav, HomeNav } from './app/navigation'
+import { AuthNav, TasksNav } from './app/navigation'
 import { useInit } from './app/hooks'
 import AppContext  from './app/context/AppContext'
 import AppLoading from 'expo-app-loading'
@@ -18,7 +18,7 @@ export default function App() {
   return (
     <AppContext.Provider value={{hasAccount, setAccount}}>
       <NavigationContainer>
-        { hasAccount ? <HomeNav/> : <AuthNav/> }
+        { hasAccount ? <TasksNav/> : <AuthNav/> }
       </NavigationContainer>
     </AppContext.Provider>
   )

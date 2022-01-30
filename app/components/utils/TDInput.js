@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import { TextInput, StyleSheet, View } from 'react-native'
 import { Constants } from './../../constants'
 
-export default function TDInput({value, setValue, placeholder, icon=false, autoFocus=false, keyboardType='default', editable=true, isPassword, style}) {
+export default function TDInput({value, numberOfLines=1, setValue, placeholder, icon=false, autoFocus=false, keyboardType='default', editable=true, isPassword, style}) {
 
   return (
     <View style={styles.wrapper}>
@@ -15,6 +15,8 @@ export default function TDInput({value, setValue, placeholder, icon=false, autoF
         autoFocus={autoFocus}
         editable={editable}
         secureTextEntry={isPassword}
+        numberOfLines={numberOfLines}
+        multiline={numberOfLines>1}
       />
       {icon && icon}
     </View>
