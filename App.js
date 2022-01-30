@@ -4,6 +4,7 @@ import { AuthNav } from './app/navigation'
 import { LogBox } from 'react-native'
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
+import './app/core/Interceptor'
 
 export default function App() {
 

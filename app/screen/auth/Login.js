@@ -1,19 +1,43 @@
 import { useEffect, useState, useContext } from 'react'
-import { Image } from 'react-native'
+import { Image , Pressable } from 'react-native'
 import { TDScreen, TDText, TDInput, TDButton } from './../../components'
 import { LOGO } from './../../assets'
 import { Constants } from './../../constants'
-import { MaterialCommunityIcons as Icon} from "@expo/vector-icons"
+import { AuthServices } from './../../services'
+import { isValidEmail } from './../../core/Helpers'
+import Toast from 'react-native-simple-toast'
 
 
 export default function Login({ navigation }) {
 
-  const [ mail, setMail ] = useState('')
+  const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ loading, setLoading ] = useState(false)
 
   const login = () => {
+    if (!isValid()) return
     setLoading(true)
+    AuthServices.login({ email, password }, res=> {
+      console.log(res);
+      setLoading(false)
+      if (res == 'error') Toast.show('Something is wrong, please enter valid data')
+      else {
+          // setUser hook
+      }
+    })
+  }
+  const isValid = () => {
+    if (!email.trim() || !password.trim()) {
+      Toast.show('Please, fill required inputs')
+      return false
+    }else if (!isValidEmail(email)) {
+      Toast.show('Please, valid email')
+      return false
+    }else if (password.length < 6) {
+      Toast.show('Please, valid password')
+      return false
+    }
+    return true
   }
 
   return (
@@ -24,9 +48,9 @@ export default function Login({ navigation }) {
       <TDText t='Welcome to To Do app 👋🏻' isCenter isBold style={{marginBottom:Constants.H*.05}}/>
 
       <TDInput
-        value={mail}
-        setValue={setMail}
-        placeholder='Enter your mail..'
+        value={email}
+        setValue={setEmail}
+        placeholder='Enter your email..'
         style={{width:'90%'}}
         autoFocus
         keyboardType='email-address'
@@ -46,6 +70,12 @@ export default function Login({ navigation }) {
         loading={loading}
         action={login}
       />
+
+      <TDText t={`Don't have an account?`} isCenter style={{marginTop:Constants.H*.05}}/>
+
+      <Pressable onPress={()=>navigation.navigate('Register')}>
+        <TDText t={`Sign Up`} isCenter isBold />
+      </Pressable>
 
     </TDScreen>
   )
